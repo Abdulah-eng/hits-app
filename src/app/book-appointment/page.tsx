@@ -12,7 +12,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { useAuth } from '@/contexts/AuthContext'
-import { Code, Calendar, Clock, DollarSign, User, AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
+import { Code, Calendar, Clock, DollarSign, User, AlertCircle, CheckCircle, Loader2, ArrowLeft } from 'lucide-react'
+import Link from 'next/link'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -289,46 +290,59 @@ export default function BookAppointmentPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--background)] via-[var(--secondary)] to-[var(--background)] flex items-center justify-center relative overflow-hidden">
+        <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--primary)]/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--accent)]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        </div>
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+          <Loader2 className="w-12 h-12 text-[var(--primary)] animate-spin mx-auto mb-4" />
+          <p className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/70">Loading...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--background)] via-[var(--secondary)] to-[var(--background)] relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--primary)]/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--accent)]/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-30" />
+      </div>
+
       {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-              <Code className="w-5 h-5 text-white" />
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/90 dark:bg-[var(--card)]/90 shadow-lg border-b border-[var(--border)]/50">
+        <nav className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/dashboard/client" className="flex items-center space-x-3 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] rounded-xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg">
+                <Code className="w-6 h-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent">
+                H.I.T.S.
+              </span>
+            </Link>
+            <div className="flex items-center space-x-4">
+              <span className="hidden sm:block text-[var(--foreground)]/70 text-sm">
+                {user.email}
+              </span>
+              <Badge className="bg-gradient-to-r from-[var(--primary)]/10 to-[var(--accent)]/10 text-[var(--primary)] border-[var(--primary)]/20">Client</Badge>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              H.I.T.S.
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-600 dark:text-gray-400">
-              Welcome, {user.email}
-            </span>
-            <Badge variant="outline">Client</Badge>
           </div>
         </nav>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-4xl mx-auto">
           {/* Page Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="mb-10 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] bg-clip-text text-transparent">
               Book an Appointment
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-[var(--foreground)]/70 max-w-2xl mx-auto">
               Select a specialist and schedule your IT consultation
             </p>
             {/* Debug info */}
@@ -344,13 +358,15 @@ export default function BookAppointmentPage() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Specialist Selection */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-xl backdrop-blur-xl bg-white/80 dark:bg-[var(--card)]/80 hover:shadow-2xl transition-all duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <User className="w-5 h-5 mr-2 text-blue-600" />
+                <CardTitle className="flex items-center text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--primary)] to-[var(--primary)]/80 flex items-center justify-center mr-3 shadow-lg">
+                    <User className="w-5 h-5 text-white" />
+                  </div>
                   Select Specialist
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-base mt-2">
                   Choose from our verified IT specialists
                 </CardDescription>
               </CardHeader>
@@ -364,7 +380,7 @@ export default function BookAppointmentPage() {
                       </SelectTrigger>
                       <SelectContent className="max-h-[300px]">
                         {specialists.length === 0 ? (
-                          <div className="p-2 text-sm text-gray-500">
+                          <div className="p-2 text-sm text-[var(--foreground)]/60">
                             No specialists available. Please check back later.
                           </div>
                         ) : (
@@ -379,17 +395,17 @@ export default function BookAppointmentPage() {
                   </div>
 
                   {selectedSpecialist && (
-                    <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                      <h3 className="font-semibold text-lg mb-2">{selectedSpecialist.users.name}</h3>
-                      <p className="text-gray-600 dark:text-gray-400 mb-2">
-                        <strong>Credentials:</strong> {selectedSpecialist.credentials}
+                    <div className="p-6 bg-gradient-to-br from-[var(--primary)]/10 via-[var(--accent)]/5 to-[var(--primary)]/10 rounded-xl border border-[var(--primary)]/20 shadow-lg">
+                      <h3 className="font-bold text-xl mb-3 text-[var(--foreground)]">{selectedSpecialist.users.name}</h3>
+                      <p className="text-[var(--foreground)]/80 mb-3 leading-relaxed">
+                        <strong className="text-[var(--foreground)]">Credentials:</strong> {selectedSpecialist.credentials}
                       </p>
-                      <p className="text-gray-600 dark:text-gray-400">
-                        <strong>Bio:</strong> {selectedSpecialist.bio}
+                      <p className="text-[var(--foreground)]/80 mb-4 leading-relaxed">
+                        <strong className="text-[var(--foreground)]">Bio:</strong> {selectedSpecialist.bio}
                       </p>
-                      <div className="mt-2">
-                        <Badge variant="outline">
-                          <DollarSign className="w-3 h-3 mr-1" />
+                      <div className="mt-4">
+                        <Badge className="bg-gradient-to-r from-[var(--primary)]/10 to-[var(--accent)]/10 text-[var(--primary)] border-[var(--primary)]/20 px-4 py-2">
+                          <DollarSign className="w-4 h-4 mr-1" />
                           ${selectedSpecialist.hourly_rate}/hour
                         </Badge>
                       </div>
@@ -400,13 +416,15 @@ export default function BookAppointmentPage() {
             </Card>
 
             {/* Date and Duration Selection */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-xl backdrop-blur-xl bg-white/80 dark:bg-[var(--card)]/80 hover:shadow-2xl transition-all duration-300">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Calendar className="w-5 h-5 mr-2 text-green-600" />
+                <CardTitle className="flex items-center text-xl">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mr-3 shadow-lg">
+                    <Calendar className="w-5 h-5 text-white" />
+                  </div>
                   Schedule Details
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-base mt-2">
                   Choose your preferred date and duration
                 </CardDescription>
               </CardHeader>
@@ -444,13 +462,15 @@ export default function BookAppointmentPage() {
 
             {/* Time Slot Selection */}
             {availableSlots.length > 0 && (
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-xl backdrop-blur-xl bg-white/80 dark:bg-[var(--card)]/80 hover:shadow-2xl transition-all duration-300">
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Clock className="w-5 h-5 mr-2 text-purple-600" />
+                  <CardTitle className="flex items-center text-xl">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--accent)]/80 flex items-center justify-center mr-3 shadow-lg">
+                      <Clock className="w-5 h-5 text-white" />
+                    </div>
                     Available Time Slots
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-base mt-2">
                     Select your preferred time slot
                   </CardDescription>
                 </CardHeader>
@@ -481,10 +501,10 @@ export default function BookAppointmentPage() {
             )}
 
             {/* Service Description */}
-            <Card className="border-0 shadow-lg">
+            <Card className="border-0 shadow-xl backdrop-blur-xl bg-white/80 dark:bg-[var(--card)]/80 hover:shadow-2xl transition-all duration-300">
               <CardHeader>
-                <CardTitle>Service Description</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-xl">Service Description</CardTitle>
+                <CardDescription className="text-base mt-2">
                   Describe what you need help with
                 </CardDescription>
               </CardHeader>
@@ -517,10 +537,12 @@ export default function BookAppointmentPage() {
 
             {/* Cost Summary */}
             {selectedSpecialist && selectedDuration && (
-              <Card className="border-0 shadow-lg">
+              <Card className="border-0 shadow-xl backdrop-blur-xl bg-gradient-to-br from-[var(--primary)]/10 via-[var(--accent)]/10 to-[var(--primary)]/10 border-2 border-[var(--primary)]/20">
                 <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <DollarSign className="w-5 h-5 mr-2 text-green-600" />
+                  <CardTitle className="flex items-center text-xl">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center mr-3 shadow-lg">
+                      <DollarSign className="w-5 h-5 text-white" />
+                    </div>
                     Cost Summary
                   </CardTitle>
                 </CardHeader>
@@ -559,22 +581,24 @@ export default function BookAppointmentPage() {
             )}
 
             {/* Submit Button */}
-            <div className="flex justify-end space-x-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-4 pt-4">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => router.push('/dashboard/client')}
+                className="h-12 text-lg border-2 hover:bg-[var(--primary)]/10 hover:border-[var(--primary)] transition-all duration-300"
               >
+                <ArrowLeft className="w-4 h-4 mr-2" />
                 Cancel
               </Button>
               <Button
                 type="submit"
                 disabled={loading || !selectedSpecialist || !selectedDate || !selectedDuration || !selectedTimeSlot || !description}
-                className="min-w-[120px]"
+                className="min-w-[200px] h-12 text-lg bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] hover:shadow-xl hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                     Processing...
                   </>
                 ) : (

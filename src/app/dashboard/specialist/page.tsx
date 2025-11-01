@@ -140,9 +140,9 @@ export default function SpecialistDashboard() {
 
     const colors = {
       pending: 'text-yellow-600',
-      confirmed: 'text-green-600',
-      completed: 'text-blue-600',
-      cancelled: 'text-red-600'
+      confirmed: 'text-[var(--accent)]',
+      completed: 'text-[var(--primary)]',
+      cancelled: 'text-[var(--destructive)]'
     }
 
     return (
@@ -267,27 +267,27 @@ export default function SpecialistDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--secondary)] to-[var(--background)] dark:from-[var(--background)] dark:to-[var(--card)]">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[var(--primary)] rounded-lg flex items-center justify-center">
               <Code className="w-5 h-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-[var(--primary)]">
               H.I.T.S.
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600 dark:text-gray-400">
+            <span className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/70">
               Welcome, {user?.email}
             </span>
             <Badge variant="outline">Specialist</Badge>
-            <button onClick={() => router.push('/dashboard/specialist/settings')} className="text-blue-600 hover:underline">Settings</button>
+            <button onClick={() => router.push('/dashboard/specialist/settings')} className="text-[var(--primary)] hover:opacity-80">Settings</button>
             <button
               onClick={signOut}
-              className="text-red-600 border border-red-400 px-3 py-1 rounded hover:bg-red-100 transition"
+              className="text-[var(--destructive)] border border-[var(--destructive)]/50 px-3 py-1 rounded hover:bg-[var(--destructive)]/10 transition"
             >
               Sign Out
             </button>
@@ -300,10 +300,10 @@ export default function SpecialistDashboard() {
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
               Specialist Dashboard
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/90">
               Manage your availability, view bookings, and track your earnings
             </p>
           </div>
@@ -314,10 +314,10 @@ export default function SpecialistDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Earnings</p>
-                    <p className="text-2xl font-bold text-green-600">${totalEarnings}</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Total Earnings</p>
+                    <p className="text-2xl font-bold text-[var(--accent)]">${totalEarnings}</p>
                   </div>
-                  <DollarSign className="w-8 h-8 text-green-600" />
+                  <DollarSign className="w-8 h-8 text-[var(--accent)]" />
                 </div>
               </CardContent>
             </Card>
@@ -338,10 +338,10 @@ export default function SpecialistDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Upcoming</p>
-                    <p className="text-2xl font-bold text-blue-600">{upcomingAppointments.length}</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Upcoming</p>
+                    <p className="text-2xl font-bold text-[var(--primary)]">{upcomingAppointments.length}</p>
                   </div>
-                  <Calendar className="w-8 h-8 text-blue-600" />
+                  <Calendar className="w-8 h-8 text-[var(--primary)]" />
                 </div>
               </CardContent>
             </Card>
@@ -350,12 +350,12 @@ export default function SpecialistDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Completed</p>
-                    <p className="text-2xl font-bold text-purple-600">
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Completed</p>
+                    <p className="text-2xl font-bold text-[var(--accent)]">
                       {appointments.filter(apt => apt.status === 'completed').length}
                     </p>
                   </div>
-                  <CheckCircle className="w-8 h-8 text-purple-600" />
+                  <CheckCircle className="w-8 h-8 text-[var(--accent)]" />
                 </div>
               </CardContent>
             </Card>
@@ -367,7 +367,7 @@ export default function SpecialistDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center">
-                    <Clock className="w-5 h-5 mr-2 text-purple-600" />
+                    <Clock className="w-5 h-5 mr-2 text-[var(--accent)]" />
                     Manage Availability
                   </CardTitle>
                   <CardDescription>
@@ -507,7 +507,7 @@ export default function SpecialistDashboard() {
           <Card className="border-0 shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Calendar className="w-5 h-5 mr-2 text-blue-600" />
+                <Calendar className="w-5 h-5 mr-2 text-[var(--primary)]" />
                 Your Bookings
               </CardTitle>
               <CardDescription>
@@ -543,7 +543,7 @@ export default function SpecialistDashboard() {
                         <TableCell>
                           <div>
                             <div>{formatDate(appointment.date)}</div>
-                            <div className="text-sm text-gray-500">
+                            <div className="text-sm text-[var(--foreground)]/60">
                               {formatTime(appointment.start_time)} - {formatTime(appointment.end_time)}
                             </div>
                           </div>

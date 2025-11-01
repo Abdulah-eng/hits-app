@@ -269,10 +269,10 @@ export default function AdminDashboard() {
 
     const colors = {
       pending: 'text-yellow-600',
-      paid: 'text-green-600',
-      refunded: 'text-red-600',
-      open: 'text-red-600',
-      resolved: 'text-green-600'
+      paid: 'text-[var(--accent)]',
+      refunded: 'text-[var(--destructive)]',
+      open: 'text-[var(--destructive)]',
+      resolved: 'text-[var(--accent)]'
     }
 
     return (
@@ -286,37 +286,37 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[var(--secondary)] to-[var(--background)] dark:from-[var(--background)] dark:to-[var(--card)] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-400">Loading admin dashboard...</p>
+          <p className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/70">Loading admin dashboard...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--secondary)] to-[var(--background)] dark:from-[var(--background)] dark:to-[var(--card)]">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-[var(--primary)] rounded-lg flex items-center justify-center">
               <Code className="w-5 h-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-2xl font-bold text-[var(--primary)]">
               H.I.T.S.
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600 dark:text-gray-400">
+            <span className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/70">
               Welcome, {user?.email}
             </span>
             <Badge variant="outline">Admin</Badge>
-            <button onClick={() => router.push('/dashboard/admin/settings')} className="text-blue-600 hover:underline">Settings</button>
+            <button onClick={() => router.push('/dashboard/admin/settings')} className="text-[var(--primary)] hover:opacity-80">Settings</button>
             <button
               onClick={signOut}
-              className="text-red-600 border border-red-400 px-3 py-1 rounded hover:bg-red-100 transition"
+              className="text-[var(--destructive)] border border-[var(--destructive)]/50 px-3 py-1 rounded hover:bg-[var(--destructive)]/10 transition"
             >
               Sign Out
             </button>
@@ -329,10 +329,10 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto">
           {/* Page Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">
               Admin Dashboard
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-[var(--foreground)]/80 dark:text-[var(--foreground)]/90">
               Manage specialists, resolve disputes, and monitor platform activity
             </p>
           </div>
@@ -343,7 +343,7 @@ export default function AdminDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Pending Approvals</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Pending Approvals</p>
                     <p className="text-2xl font-bold text-yellow-600">{pendingSpecialists.length}</p>
                   </div>
                   <Shield className="w-8 h-8 text-yellow-600" />
@@ -355,10 +355,10 @@ export default function AdminDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Open Disputes</p>
-                    <p className="text-2xl font-bold text-red-600">{openDisputes.length}</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Open Disputes</p>
+                    <p className="text-2xl font-bold text-[var(--destructive)]">{openDisputes.length}</p>
                   </div>
-                  <AlertTriangle className="w-8 h-8 text-red-600" />
+                  <AlertTriangle className="w-8 h-8 text-[var(--destructive)]" />
                 </div>
               </CardContent>
             </Card>
@@ -367,10 +367,10 @@ export default function AdminDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Revenue</p>
-                    <p className="text-2xl font-bold text-green-600">${totalRevenue}</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Total Revenue</p>
+                    <p className="text-2xl font-bold text-[var(--accent)]">${totalRevenue}</p>
                   </div>
-                  <DollarSign className="w-8 h-8 text-green-600" />
+                  <DollarSign className="w-8 h-8 text-[var(--accent)]" />
                 </div>
               </CardContent>
             </Card>
@@ -379,10 +379,10 @@ export default function AdminDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Users</p>
-                    <p className="text-2xl font-bold text-blue-600">{totalUsers}</p>
+                    <p className="text-sm font-medium text-[var(--foreground)]/70">Total Users</p>
+                    <p className="text-2xl font-bold text-[var(--primary)]">{totalUsers}</p>
                   </div>
-                  <Users className="w-8 h-8 text-blue-600" />
+                  <Users className="w-8 h-8 text-[var(--primary)]" />
                 </div>
               </CardContent>
             </Card>
@@ -467,7 +467,7 @@ export default function AdminDashboard() {
           <Card className="border-0 shadow-lg mb-8">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <AlertTriangle className="w-5 h-5 mr-2 text-red-600" />
+                <AlertTriangle className="w-5 h-5 mr-2 text-[var(--destructive)]" />
                 Disputes & Transactions
               </CardTitle>
               <CardDescription>
@@ -569,7 +569,7 @@ export default function AdminDashboard() {
           <Card className="border-0 shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center">
-                <Users className="w-5 h-5 mr-2 text-blue-600" />
+                <Users className="w-5 h-5 mr-2 text-[var(--primary)]" />
                 User Management & Reviews
               </CardTitle>
               <CardDescription>
@@ -662,7 +662,7 @@ export default function AdminDashboard() {
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label htmlFor="reason">Dispute Reason</Label>
-              <div className="p-3 bg-gray-50 rounded-md text-sm">
+              <div className="p-3 bg-[var(--secondary)] rounded-md text-sm">
                 {selectedDispute?.reason}
               </div>
             </div>
